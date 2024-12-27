@@ -120,3 +120,18 @@ idea {
         downloadJavadoc = true
     }
 }
+
+// custom
+
+tasks.register("customJar", Jar) {
+    archiveClassifier = 'custom'
+    from sourceSets.main.output
+}
+
+obfuscation {
+    reobfuscate(tasks.named('customJar'), sourceSets.main)
+}
+
+tasks.named('build') {
+    finalizedBy customJar
+}
